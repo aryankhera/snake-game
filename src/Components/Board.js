@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 
 export default function Board() {
-  const boardSize = 10;
+  const boardSize = 15;
+  const mid = Math.floor(boardSize / 2 - 1);
   const [matrix, setMatrix] = useState(
     Array.from({ length: boardSize }, () =>
       Array.from({ length: boardSize }, () => 0)
@@ -22,8 +23,7 @@ export default function Board() {
   const [availablePos, setavailablePos] = useState(
     new Set(
       Array.from({ length: boardSize * boardSize }, (_, i) => {
-        if (i !== boardSize * (boardSize / 2 - 1) + (boardSize / 2 - 1))
-          return i;
+        if (i !== boardSize * mid + mid) return i;
         else return 0;
       })
     )
@@ -111,8 +111,7 @@ export default function Board() {
       (prev) =>
         new Set(
           Array.from({ length: boardSize * boardSize }, (_, i) => {
-            if (i !== boardSize * (boardSize / 2 - 1) + (boardSize / 2 - 1))
-              return i;
+            if (i !== boardSize * mid + mid) return i;
             else return 0;
           })
         )
@@ -120,12 +119,12 @@ export default function Board() {
     setMatrix((prev) => {
       let newMatrix = [...prev];
       newMatrix = newMatrix.map((row) => row.map((val) => 0));
-      newMatrix[boardSize / 2 - 1][boardSize / 2 - 1] = 1;
+      newMatrix[mid][mid] = 1;
       return newMatrix;
     });
     setSnake((prev) => {
       let newSnake = [];
-      newSnake.push([boardSize / 2 - 1, boardSize / 2 - 1]);
+      newSnake.push([mid, mid]);
       return newSnake;
     });
     generateFruit();
