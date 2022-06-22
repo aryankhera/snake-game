@@ -36,3 +36,26 @@
     transform: rotate(360deg);
   }
 }
+.row {
+display: flex;
+flex-direction: row;
+}
+.board{
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 5rem;
+}
+.cell{
+  width: 2rem;
+  height: 2rem;
+  display: inline-block;
+  outline: 1px solid black;
+}
+.fruit-cell{
+  background-color: violet;
+}
+.snake-cell{
+  background-color: green;
+}
