@@ -187,6 +187,18 @@ export default function Board() {
           );
         })}
       </div>
+      <div className="buttons">
+        <div>
+          <i onClick={() => moveUp()} class="arrow up"></i>
+        </div>
+        <div>
+          <i onClick={() => moveLeft()} class="arrow left"></i>
+          <i onClick={() => moveRight()} class="arrow right"></i>
+        </div>
+        <div>
+          <i onClick={() => moveDown()} class="arrow down"></i>
+        </div>
+      </div>
     </>
   );
 }
