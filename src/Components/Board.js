@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 
 export default function Board() {
-  const boardSize = 15;
+  const boardSize = 10;
   const mid = Math.floor(boardSize / 2 - 1);
   const [matrix, setMatrix] = useState(
     Array.from({ length: boardSize }, () =>
@@ -10,7 +10,6 @@ export default function Board() {
   );
   const generateFruit = () => {
     let pos = [...availablePos];
-    console.log(pos);
     let fruitPos = pos[Math.floor(Math.random() * availablePos.size)];
     setMatrix((prev) => {
       let newMatrix = [...prev];
@@ -44,7 +43,6 @@ export default function Board() {
     });
   };
   const removeAvailblePos = (i, j) => {
-    console.log(`Remove ${i}, ${j} ${i * boardSize + j}`);
     setavailablePos((prev) => {
       let newSet = new Set([...prev]);
       newSet.delete(i * boardSize + j);
