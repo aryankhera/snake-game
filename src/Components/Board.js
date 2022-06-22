@@ -51,6 +51,60 @@ export default function Board() {
       return newSet;
     });
   };
+  const gameReset = () => {
+    setavailablePos(
+      (prev) =>
+        new Set(
+          Array.from({ length: boardSize * boardSize }, (_, i) => {
+            if (i !== boardSize * mid + mid) return i;
+            else return 0;
+          })
+        )
+    );
+    setMatrix((prev) => {
+      let newMatrix = [...prev];
+      newMatrix = newMatrix.map((row) => row.map((val) => 0));
+      newMatrix[mid][mid] = 1;
+      return newMatrix;
+    });
+    setSnake((prev) => {
+      let newSnake = [];
+      newSnake.push([mid, mid]);
+      return newSnake;
+    });
+    generateFruit();
+  };
+  const checkValid = (i, j) => {
+    if (matrix[i][j] !== 1) return true;
+    else {
+      alert(`Game Over. Final Score: ${snake.length}`);
+      gameReset();
+    }
+  };
+  const moveUp = () => {
+    let head = snake[0];
+    if (head[0] - 1 >= 0 && checkValid(head[0] - 1, head[1])) {
+      updateMatrix([head[0] - 1, head[1]]);
+    }
+  };
+  const moveDown = () => {
+    let head = snake[0];
+    if (head[0] + 1 < boardSize && checkValid(head[0] + 1, head[1])) {
+      updateMatrix([head[0] + 1, head[1]]);
+    }
+  };
+  const moveRight = () => {
+    let head = snake[0];
+    if (head[1] + 1 < boardSize && checkValid(head[0], head[1] + 1)) {
+      updateMatrix([head[0], head[1] + 1]);
+    }
+  };
+  const moveLeft = () => {
+    let head = snake[0];
+    if (head[1] - 1 >= 0 && checkValid(head[0], head[1] - 1)) {
+      updateMatrix([head[0], head[1] - 1]);
+    }
+  };
 
   const kpref = useRef(handleEvent);
   useEffect(() => {
@@ -106,63 +160,9 @@ export default function Board() {
     }
   };
 
-  const gameReset = () => {
-    setavailablePos(
-      (prev) =>
-        new Set(
-          Array.from({ length: boardSize * boardSize }, (_, i) => {
-            if (i !== boardSize * mid + mid) return i;
-            else return 0;
-          })
-        )
-    );
-    setMatrix((prev) => {
-      let newMatrix = [...prev];
-      newMatrix = newMatrix.map((row) => row.map((val) => 0));
-      newMatrix[mid][mid] = 1;
-      return newMatrix;
-    });
-    setSnake((prev) => {
-      let newSnake = [];
-      newSnake.push([mid, mid]);
-      return newSnake;
-    });
-    generateFruit();
-  };
-  const checkValid = (i, j) => {
-    if (matrix[i][j] !== 1) return true;
-    else {
-      alert(`Game Over. Final Score: ${snake.length}`);
-      gameReset();
-    }
-  };
-  const moveUp = () => {
-    let head = snake[0];
-    if (head[0] - 1 >= 0 && checkValid(head[0] - 1, head[1])) {
-      updateMatrix([head[0] - 1, head[1]]);
-    }
-  };
-  const moveDown = () => {
-    let head = snake[0];
-    if (head[0] + 1 < boardSize && checkValid(head[0] + 1, head[1])) {
-      updateMatrix([head[0] + 1, head[1]]);
-    }
-  };
-  const moveRight = () => {
-    let head = snake[0];
-    if (head[1] + 1 < boardSize && checkValid(head[0], head[1] + 1)) {
-      updateMatrix([head[0], head[1] + 1]);
-    }
-  };
-  const moveLeft = () => {
-    let head = snake[0];
-    if (head[1] - 1 >= 0 && checkValid(head[0], head[1] - 1)) {
-      updateMatrix([head[0], head[1] - 1]);
-    }
-  };
   return (
     <>
-      <h1>Board</h1>
+      <h1>Snake Game</h1>
       <p>Use WASD to move</p>
       <h3>{`Score: ${snake.length}`}</h3>
       <div className="board">
